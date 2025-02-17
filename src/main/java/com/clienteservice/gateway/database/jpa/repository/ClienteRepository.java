@@ -12,4 +12,8 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
     List<Cliente> findAllByAtivoTrue();
 
     Cliente findByCpfAndAtivoTrue(String cpf);
+
+    Cliente findByCpf(String cpf);
+
+    boolean existsByCpf(String cpf);
 }

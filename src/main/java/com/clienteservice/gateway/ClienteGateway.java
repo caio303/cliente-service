@@ -6,7 +6,6 @@ import java.util.Collection;
 
 public interface ClienteGateway {
 
-    void excluirPorCpf(String cpf);
 
     boolean existePorCpf(String cpf);
 

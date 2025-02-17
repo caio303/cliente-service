@@ -20,26 +20,24 @@ public class ClienteJpaGateway implements ClienteGateway {
         this.clienteRepository = clienteRepository;
     }
 
-
-    @Override
-    public void excluirPorCpf(String cpf) {
-
-    }
-
     @Override
     public boolean existePorCpf(String cpf) {
-        return false;
+        return clienteRepository.existsByCpf(cpf);
     }
 
     @Override
     public void cadastrar(Cliente cliente) {
-
+        var entity = new com.clienteservice.entity.Cliente(null, cliente.nome(), cliente.cpf(), true);
+        clienteRepository.save(entity);
     }
 
     @Override
     public com.clienteservice.entity.Cliente buscarPorCpf(String cpf, boolean ativo) {
-        // so buscar pelos que constam como ativos
-        return null;
+        if (ativo) {
+            return clienteRepository.findByCpfAndAtivoTrue(cpf);
+        } else {
+            return clienteRepository.findByCpf(cpf);
+        }
     }
 
     @Override

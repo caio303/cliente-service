@@ -1,6 +1,8 @@
 package com.clienteservice.usecase;
 
 import com.clienteservice.domain.ValidadorCpf;
+import com.clienteservice.entity.Cliente;
+import com.clienteservice.exception.ClienteInexistenteException;
 import com.clienteservice.exception.FormatoInvalidoException;
 import com.clienteservice.gateway.ClienteGateway;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,12 @@ public class ExcluirClienteUseCase {
             throw new FormatoInvalidoException("cpf", cpf);
         }
 
-        clienteGateway.excluirPorCpf(cpf);
+        var cliente = clienteGateway.buscarPorCpf(cpf, true);
+
+        if (cliente == null) {
+            throw new ClienteInexistenteException(cpf);
+        }
+
+        cliente.setAtivo(false);
     }
 }
